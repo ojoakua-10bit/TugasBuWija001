@@ -22,7 +22,13 @@ window.onload = function () {
     // Load the data into GPU
     let buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(plane01), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, 16*26, gl.STATIC_DRAW);
+    gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(plane01));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 8*4, flatten(plane02));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 8*8, flatten(plane03));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 8*12, flatten(plane04));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 8*15, flatten(plane05));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 8*19, flatten(plane06));
 
     // Associate out shader variables with our data buffers
     let vLoc1 = gl.getAttribLocation(program01, "vLoc1");
@@ -33,6 +39,11 @@ window.onload = function () {
     setTimeout(function render() {
         requestAnimFrame(render);
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.LINE_LOOP, 0, plane01.length);
+        gl.drawArrays(gl.LINE_LOOP, 0, 4);
+        gl.drawArrays(gl.LINE_LOOP, 4, 4);
+        gl.drawArrays(gl.LINE_LOOP, 8, 4);
+        gl.drawArrays(gl.LINE_LOOP, 12, 3);
+        gl.drawArrays(gl.LINE_LOOP, 15, 4);
+        gl.drawArrays(gl.LINE_LOOP, 19, 4);
     }, 16.6667)
 };
