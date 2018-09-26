@@ -22,10 +22,10 @@ window.onload = function () {
     // Load the data into GPU
     let buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(points), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(plane01), gl.STATIC_DRAW);
 
     // Associate out shader variables with our data buffers
-    var vLoc1 = gl.getAttribLocation(program01, "vLoc1");
+    let vLoc1 = gl.getAttribLocation(program01, "vLoc1");
     gl.vertexAttribPointer(vLoc1, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vLoc1);
 
@@ -33,6 +33,6 @@ window.onload = function () {
     setTimeout(function render() {
         requestAnimFrame(render);
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.LINE_LOOP, 0, points.length);
+        gl.drawArrays(gl.LINE_LOOP, 0, plane01.length);
     }, 16.6667)
 };
