@@ -52,15 +52,6 @@ window.onload = function () {
             gl.bufferSubData(gl.ARRAY_BUFFER, 16*(j+k), flatten(color[i]));
         j += plane[i].length;
     }
-
-    // document.getElementById("Red").onchange =
-    //     function() { RedUni = event.srcElement.value; };
-    //
-    // document.getElementById("Green").onchange =
-    //     function() { GreenUni = event.srcElement.value; };
-    //
-    // document.getElementById("Blue").onchange =
-    //     function() { BlueUni = event.srcElement.value; };
     
     document.getElementById("switch").onclick = function() {
         if (on) {
