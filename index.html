@@ -8,16 +8,20 @@
     <script src="js/MV.js"></script>
     <script type="x-shader/x-vertex" id="vShader01">
         attribute vec4 vLoc1;
+        attribute vec4 vCol1;
+        varying vec4 fCol;
 
         void main() {
             gl_Position = vLoc1;
+            fCol = vCol1;
         }
     </script>
     <script type="x-shader/x-fragment" id="fShader01">
         precision mediump float;
+        varying vec4 fCol;
 
         void main() {
-            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+            gl_FragColor = fCol;
         }
     </script>
     <script src="js/data.js"></script>

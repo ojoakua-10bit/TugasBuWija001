@@ -12,7 +12,7 @@ window.onload = function () {
 
     // Configure WebGL
     gl.viewport(0, 0, ctx.width, ctx.height);
-    gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    gl.clearColor(0.0, 0.5, 0.5, 1.0);
     gl.enable(gl.DEPTH_TEST);
 
     // Load shaders and initialize attribute
@@ -20,30 +20,45 @@ window.onload = function () {
     gl.useProgram(program01);
 
     // Load the data into GPU
-    let buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, 16*26, gl.STATIC_DRAW);
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(plane01));
-    gl.bufferSubData(gl.ARRAY_BUFFER, 8*4, flatten(plane02));
-    gl.bufferSubData(gl.ARRAY_BUFFER, 8*8, flatten(plane03));
-    gl.bufferSubData(gl.ARRAY_BUFFER, 8*12, flatten(plane04));
-    gl.bufferSubData(gl.ARRAY_BUFFER, 8*15, flatten(plane05));
-    gl.bufferSubData(gl.ARRAY_BUFFER, 8*19, flatten(plane06));
+    let vBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, 8*30, gl.STATIC_DRAW);
 
     // Associate out shader variables with our data buffers
     let vLoc1 = gl.getAttribLocation(program01, "vLoc1");
     gl.vertexAttribPointer(vLoc1, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vLoc1);
 
-    // Render at least 60 FPS
+    let cBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, 16*30, gl.STATIC_DRAW);
+
+    let vCol1 = gl.getAttribLocation(program01, "vCol1");
+    gl.vertexAttribPointer(vCol1, 4, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vCol1);
+
+    let j = 0;
+    for (let i = 0; i < plane.length; i++) {
+        let t = vec4(0.0, 0.0, 0.0, 1.0);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vBuf);
+        for (let k = 0; k < plane[i].length; k++)
+            gl.bufferSubData(gl.ARRAY_BUFFER, 8*(j+k), flatten(plane[i][k]));
+        gl.bindBuffer(gl.ARRAY_BUFFER, cBuf);
+        for (let k = 0; k < plane[i].length; k++)
+            gl.bufferSubData(gl.ARRAY_BUFFER, 16*(j+k), flatten(color[i]));
+        j += plane[i].length;
+    }
+
+    // Render at least 25 FPS
     setTimeout(function render() {
         requestAnimFrame(render);
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.LINE_LOOP, 0, 4);
-        gl.drawArrays(gl.LINE_LOOP, 4, 4);
-        gl.drawArrays(gl.LINE_LOOP, 8, 4);
-        gl.drawArrays(gl.LINE_LOOP, 12, 3);
-        gl.drawArrays(gl.LINE_LOOP, 15, 4);
-        gl.drawArrays(gl.LINE_LOOP, 19, 4);
-    }, 16.6667)
+        gl.drawArrays(gl.TRIANGLE_FAN, 4, 4);
+        gl.drawArrays(gl.TRIANGLE_FAN, 15, 4);
+        gl.drawArrays(gl.TRIANGLE_FAN, 19, 4);
+        gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
+        gl.drawArrays(gl.TRIANGLE_FAN, 8, 4);
+        gl.drawArrays(gl.TRIANGLE_FAN, 12, 3);
+        gl.drawArrays(gl.TRIANGLE_FAN, 23, 4);
+    }, 40)
 };
