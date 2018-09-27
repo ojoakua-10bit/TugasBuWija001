@@ -53,6 +53,15 @@ window.onload = function () {
         j += plane[i].length;
     }
 
+    document.getElementById("Red").onchange =
+   function() { RedUni = event.srcElement.value; };
+
+   document.getElementById("Green").onchange =
+   function() { GreenUni = event.srcElement.value; };
+
+   document.getElementById("Blue").onchange =
+   function() { BlueUni = event.srcElement.value; };
+    
     document.getElementById("switch").onclick = function() {
         if (on) {
             color[1] = colors.GRAY;
