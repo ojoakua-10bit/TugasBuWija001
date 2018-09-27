@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Tugas WebGL 001</title>
+    <style>
+        body {
+            font-family: "Roboto Condensed", Roboto, Arial, sans-serif;
+            size: 12pt;
+        }
+        .content {
+            display: inline;
+        }
+        .row {
+            width: 100%;
+        }
+    </style>
     <script src="js/webgl-utils.js"></script>
     <script src="js/initShaders.js"></script>
     <script src="js/MV.js"></script>
@@ -28,11 +40,14 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-<div>
-    <canvas id="main-canvas" width="640" height="640">Your browser doesn't support canvas!</canvas>
-</div>
-<div>
-    <!-- Controller here -->
+<div class="row">
+    <div class="content">
+        <canvas id="main-canvas" width="640" height="640">Your browser doesn't support canvas!</canvas>
+    </div>
+    <div class="content">
+        <!-- Controller here -->
+        <button id="switch">Turn On</button>
+    </div>
 </div>
 </body>
 </html>
