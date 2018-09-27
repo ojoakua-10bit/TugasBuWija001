@@ -53,14 +53,14 @@ window.onload = function () {
         j += plane[i].length;
     }
 
-    document.getElementById("Red").onchange =
-   function() { RedUni = event.srcElement.value; };
-
-   document.getElementById("Green").onchange =
-   function() { GreenUni = event.srcElement.value; };
-
-   document.getElementById("Blue").onchange =
-   function() { BlueUni = event.srcElement.value; };
+    // document.getElementById("Red").onchange =
+    //     function() { RedUni = event.srcElement.value; };
+    //
+    // document.getElementById("Green").onchange =
+    //     function() { GreenUni = event.srcElement.value; };
+    //
+    // document.getElementById("Blue").onchange =
+    //     function() { BlueUni = event.srcElement.value; };
     
     document.getElementById("switch").onclick = function() {
         if (on) {
@@ -91,6 +91,9 @@ window.onload = function () {
             else {
                 let x = 2 * ev.clientX / ctx.width - 1;
                 let y = 2 * ev.clientY / ctx.height - 1;
+                let R = document.getElementById("Red").value / 255;
+                let G = document.getElementById("Green").value / 255;
+                let B = document.getElementById("Blue").value / 255;
                 if (x < 0.81 && x > -0.856 && y < 0.466 && y > -0.5) {
                     tmp[2] = vec2(x, -y);
                     tmp[1] = vec2(tmp[0][0], tmp[2][1]);
@@ -100,7 +103,7 @@ window.onload = function () {
                         gl.bufferSubData(gl.ARRAY_BUFFER, 8*(j+k), flatten(tmp[k]));
                     gl.bindBuffer(gl.ARRAY_BUFFER, cBuf);
                     for (let k = 0; k < tmp.length; k++)
-                        gl.bufferSubData(gl.ARRAY_BUFFER, 16*(j+k), flatten(colors.MAGENTA));
+                        gl.bufferSubData(gl.ARRAY_BUFFER, 16*(j+k), flatten(vec4(R, G, B, 1.0)));
                     j += tmp.length;
                     wait = !wait;
                 }
